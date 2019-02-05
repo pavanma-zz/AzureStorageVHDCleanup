@@ -90,13 +90,13 @@ if ($SubList) {
         if (!$?) {
             write-host (Get-Date -format "yyyyMMdd HH:mm:ss") ": ERROR: Failed to login in classic mode Azure sub (classic) '$sub', error:", $ERROR[0].exception.message
         } else {
-            $orphanedVHDs = Get-AzureDisk | Where-Object {$_.AttachedTo –eq $null}
+            $orphanedVHDs = Get-AzureDisk | Where-Object {$_.AttachedTo â€“eq $null}
             if (!$?) {
                 write-host (Get-Date -format "yyyyMMdd HH:mm:ss") ": ERROR: Failed to get orphaned disk list (classic) in sub '$sub', error:", $ERROR[0].exception.message
             } else {
                 if ($orphanedVHDs) {
                     Write-Host (Get-Date -format "yyyyMMdd HH:mm:ss") ": INFO : Found", $orphanedVHDs.count , "Orphaned VHDs (classic) in sub '$sub'"
-#$object = New-Object PSObject –Prop $StorAcctAndCntr
+#$object = New-Object PSObject â€“Prop $StorAcctAndCntr
 #$StorAcctAndCntr = @()
 #$orphanedVHDs | % {
 #    $object.StorAccount = $_.MediaLink.Host.split(".")[0]
@@ -479,7 +479,3 @@ if ($flag) {
 }
 
 Stop-Transcript
-# copy output file to central location for reference
-copy-item $logFile "\\co1-dds-m01.redmond.corp.microsoft.com\logs\Get-AzureOrphanedDisks\"
-if (test-path $outFile) { copy-item $outFile "\\co1-dds-m01.redmond.corp.microsoft.com\logs\Get-AzureOrphanedDisks\" }
-
